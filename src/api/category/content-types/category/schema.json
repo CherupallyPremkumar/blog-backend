@@ -25,6 +25,10 @@
         "description": {
             "type": "text"
         },
+        "order": {
+            "type": "integer",
+            "default": 0
+        },
         "articles": {
             "type": "relation",
             "relation": "oneToMany",
