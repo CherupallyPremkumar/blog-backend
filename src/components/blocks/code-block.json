@@ -1,0 +1,19 @@
+{
+    "collectionName": "components_blocks_code_blocks",
+    "info": {
+        "displayName": "Code Block",
+        "description": "A code snippet with syntax highlighting",
+        "icon": "code"
+    },
+    "options": {},
+    "attributes": {
+        "code": {
+            "type": "text",
+            "required": true
+        },
+        "language": {
+            "type": "string",
+            "default": "javascript"
+        }
+    }
+}

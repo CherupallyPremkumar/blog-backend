@@ -1,0 +1,25 @@
+{
+    "collectionName": "components_blocks_images",
+    "info": {
+        "displayName": "Image",
+        "description": "An image block with optional caption",
+        "icon": "picture"
+    },
+    "options": {},
+    "attributes": {
+        "image": {
+            "type": "media",
+            "multiple": false,
+            "required": true,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "caption": {
+            "type": "string"
+        },
+        "altText": {
+            "type": "string"
+        }
+    }
+}
