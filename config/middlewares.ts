@@ -27,7 +27,7 @@ export default ({ env }) => [
       keepHeaderOnError: true,
     },
   },
-  'strapi::poweredBy',
+
   'strapi::query',
   'strapi::body',
   'strapi::session',
