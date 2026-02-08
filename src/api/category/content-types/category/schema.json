@@ -29,6 +29,18 @@
             "type": "integer",
             "default": 0
         },
+        "parent": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::category.category",
+            "inversedBy": "children"
+        },
+        "children": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::category.category",
+            "mappedBy": "parent"
+        },
         "articles": {
             "type": "relation",
             "relation": "oneToMany",
