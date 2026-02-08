@@ -20,7 +20,7 @@ export default ({ env }) => [
     config: {
       enabled: true,
       // Strict origin validation
-      origin: env('CORS_ORIGINS', 'http://localhost:3000').split(',').map(url => url.trim()),
+      origin: env('CORS_ORIGINS') ? env('CORS_ORIGINS').split(',').map(url => url.trim()) : [],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
       credentials: true,

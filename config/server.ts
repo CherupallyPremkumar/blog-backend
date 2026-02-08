@@ -3,7 +3,7 @@ export default ({ env }) => ({
   port: env.int('PORT', 1337),
 
   // Production URL for generating correct asset links
-  url: env('PUBLIC_URL', `http://localhost:${env.int('PORT', 1337)}`),
+  url: env('PUBLIC_URL'),
 
   app: {
     keys: env.array('APP_KEYS'),
