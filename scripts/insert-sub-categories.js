@@ -29,6 +29,20 @@ async function main() {
             { name: 'Spring Security', slug: 'spring-security', desc: 'Authentication and access control for Spring', parentSlug: 'spring-boot', order: 1 },
             { name: 'Docker Compose', slug: 'docker-compose', desc: 'Multi-container orchestration', parentSlug: 'docker', order: 1 },
 
+            // System Design Subcategories
+            { name: 'Scalability', slug: 'scalability', desc: 'Scaling systems horizontally and vertically', parentSlug: 'system-design', order: 1 },
+            { name: 'Microservices', slug: 'microservices', desc: 'Architecting distributed services', parentSlug: 'system-design', order: 2 },
+            { name: 'Load Balancing', slug: 'load-balancing', desc: 'Distributing traffic efficiently', parentSlug: 'system-design', order: 3 },
+            { name: 'Distributed Systems', slug: 'distributed-systems', desc: 'Core concepts of distributed computing', parentSlug: 'system-design', order: 4 },
+            { name: 'Caching', slug: 'caching', desc: 'Strategies for data caching', parentSlug: 'system-design', order: 5 },
+
+            // JVM Subcategories
+            { name: 'Garbage Collection', slug: 'garbage-collection', desc: 'JVM memory management', parentSlug: 'jvm', order: 1 },
+            { name: 'Memory Model', slug: 'java-memory-model', desc: 'Heap, Stack and Metaspace', parentSlug: 'jvm', order: 2 },
+            { name: 'Class Loaders', slug: 'class-loaders', desc: 'How Java loads classes', parentSlug: 'jvm', order: 3 },
+            { name: 'JIT Compiler', slug: 'jit-compiler', desc: 'Just-In-Time compilation', parentSlug: 'jvm', order: 4 },
+            { name: 'Performance Tuning', slug: 'performance-tuning', desc: 'Optimizing JVM performance', parentSlug: 'jvm', order: 5 },
+
             // Re-parenting existing ones
             { name: 'Spring Boot', slug: 'spring-boot', parentSlug: 'java', order: 1 },
             { name: 'Hibernate', slug: 'hibernate', parentSlug: 'java', order: 2 },

@@ -1,0 +1,16 @@
+{
+    "attributes": {
+        "comments": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::comment.comment",
+            "mappedBy": "author"
+        },
+        "likes": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::like.like",
+            "mappedBy": "user"
+        }
+    }
+}
