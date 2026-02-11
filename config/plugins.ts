@@ -1,6 +1,13 @@
 export default ({ env }) => ({
+
+    'users-permissions': {
+        config: {
+            jwtSecret: env('JWT_SECRET'),
+        },
+    },
     upload: {
         config: {
+
             provider: 'cloudinary',
             providerOptions: {
                 cloud_name: env('CLOUDINARY_NAME'),

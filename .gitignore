@@ -130,3 +130,4 @@ build
 .strapi-updater.json
 .strapi-cloud.json.env_prod
 .env_prod
+.env_dev

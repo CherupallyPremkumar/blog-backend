@@ -1,35 +1,58 @@
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::like.like', ({ strapi }) => ({
+    // Override find to always populate user
+    async find(ctx) {
+        const filters = ctx.query.filters || {};
+        const likes = await strapi.documents('api::like.like').findMany({
+            filters,
+            populate: {
+                user: { fields: ['id', 'username', 'email'] },
+                article: true,
+            },
+        });
+
+        return {
+            data: likes,
+            meta: { pagination: { page: 1, pageSize: 25, pageCount: 1, total: likes.length } },
+        };
+    },
+
     async create(ctx) {
         const user = ctx.state.user;
         if (!user) {
             return ctx.unauthorized('You must be logged in to like an article.');
         }
 
-        // Force user to be the authenticated user — prevents impersonation
-        if (!ctx.request.body.data) {
-            ctx.request.body.data = {};
+        const articleId = ctx.request.body?.data?.article;
+        if (!articleId) {
+            return ctx.badRequest('Article ID is required.');
         }
-        ctx.request.body.data.user = user.id;
 
         // Check for duplicate likes (same user + same article)
-        const articleId = ctx.request.body.data.article;
-        if (articleId) {
-            const existingLike = await strapi.db.query('api::like.like').findOne({
-                where: {
-                    user: { id: user.id },
-                    article: { id: articleId },
-                },
-            });
+        const existingLikes = await strapi.documents('api::like.like').findMany({
+            filters: {
+                user: { id: user.id },
+                article: { id: articleId },
+            },
+        });
 
-            if (existingLike) {
-                return ctx.badRequest('You have already liked this article.');
-            }
+        if (existingLikes.length > 0) {
+            return ctx.badRequest('You have already liked this article.');
         }
 
-        const response = await super.create(ctx);
-        return response;
+        // Create the like using the document service with proper relations
+        const like = await strapi.documents('api::like.like').create({
+            data: {
+                article: articleId,
+                user: user.id,
+            },
+            populate: {
+                user: { fields: ['id', 'username', 'email'] },
+            },
+        });
+
+        return { data: like };
     },
 
     async delete(ctx) {
@@ -38,13 +61,14 @@ export default factories.createCoreController('api::like.like', ({ strapi }) => 
             return ctx.unauthorized('You must be logged in.');
         }
 
-        // Strapi 5 passes documentId in the URL param
         const { id: documentId } = ctx.params;
-        const like = await strapi.db.query('api::like.like').findOne({
-            where: { document_id: documentId },
+
+        const likes = await strapi.documents('api::like.like').findMany({
+            filters: { documentId },
             populate: ['user'],
         });
 
+        const like = likes[0];
         if (!like) {
             return ctx.notFound('Like not found.');
         }
@@ -53,7 +77,10 @@ export default factories.createCoreController('api::like.like', ({ strapi }) => 
             return ctx.forbidden('You can only remove your own likes.');
         }
 
-        const response = await super.delete(ctx);
-        return response;
+        await strapi.documents('api::like.like').delete({
+            documentId,
+        });
+
+        return { data: null };
     },
 }));
