@@ -1,61 +1,100 @@
-# 🚀 Getting started with Strapi
+# 🚀 Personal Blog Backend (Strapi v5)
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+This is the headless CMS for the Personal Blog, built with **Strapi v5**. It manages content, authentication, and media storage.
 
-### `develop`
+## ✨ Features
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+- **Content Types**:
+  - `Article`: Blog posts with rich text blocks, authors, categories, and cover images.
+  - `Category`: Hierarchical categories for organizing content.
+  - `Author`: Profiles for content creators.
+  - `Comment`: User comments on articles.
+  - `Like`: User likes on articles.
+  - `User`: Extended user profiles (bio, avatar, role-based access).
 
-```
-npm run develop
-# or
-yarn develop
-```
+- **Media Storage**: Integrated with **Cloudinary** for image optimization and responsive formats.
+- **Authentication**: JWT-based auth via `users-permissions` plugin.
+- **Custom APIs**:
+  - `/api/profile`: Update user bio and avatar seamlessly.
+  - `/api/profile/liked-articles`: Retrieve articles liked by the authenticated user.
 
-### `start`
+## 🛠️ Tech Stack
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+- **Framework**: Strapi v5
+- **Database**: SQLite (Development) / PostgreSQL (Production recommeded)
+- **Language**: TypeScript
+- **Plugins**:
+  - `@strapi/plugin-users-permissions`
+  - `@strapi/provider-upload-cloudinary`
 
-```
-npm run start
-# or
-yarn start
-```
+## 🚀 Getting Started
 
-### `build`
+### Prerequisites
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+- Node.js 18+
+- npm or yarn
 
-```
-npm run build
-# or
-yarn build
-```
+### Installation
 
-## ⚙️ Deployment
+1. Clone the repository:
+   ```bash
+   git clone <repo-url>
+   cd backend
+   ```
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-```
-yarn strapi deploy
-```
+3. Configure environment variables:
+   Copy `.env.example` to `.env` and fill in secrets:
+   ```bash
+   cp .env.example .env
+   ```
+   
+   **Required Variables:**
+   ```env
+   HOST=0.0.0.0
+   PORT=1337
+   APP_KEYS=...
+   API_TOKEN_SALT=...
+   ADMIN_JWT_SECRET=...
+   TRANSFER_TOKEN_SALT=...
+   JWT_SECRET=...
+   
+   # Database
+   DATABASE_CLIENT=sqlite
+   DATABASE_FILENAME=.tmp/data.db
+   
+   # Cloudinary (for media)
+   CLOUDINARY_NAME=...
+   CLOUDINARY_KEY=...
+   CLOUDINARY_SECRET=...
+   ```
 
-## 📚 Learn more
+4. Start development server:
+   ```bash
+   npm run develop
+   ```
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+5. Access Admin Panel: [http://localhost:1337/admin](http://localhost:1337/admin)
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+## 📜 Scripts
 
-## ✨ Community
+- `npm run develop`: Start dev server with auto-reload
+- `npm run start`: Start production server
+- `npm run build`: Build admin panel
+- `npm run strapi`: Run Strapi CLI commands
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+## 📂 Customizations
+
+### Profile Controller
+Located in `src/api/profile/`, this custom controller handles user bio updates and avatar uploads, fixing default permission limitations.
+
+### Extensions
+`src/extensions/users-permissions/` contains schema updates for the User content type (adding `bio`, `avatar`, relations).
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+Built with ❤️ by Prem Kumar
